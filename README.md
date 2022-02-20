@@ -2,11 +2,14 @@
 
 You are working for a property management company renting rooms and properties for short periods of time on various rental platforms. You need to estimate the typical price for a given property based on the price of similar properties. Your company receives new data in bulk every week. The model needs to be retrained with the same cadence, necessitating an end-to-end pipeline that can be reused.
 
-In this project you will build such a pipeline.
+In this project you will build such a pipeline. Here is a diagram of the ML pipeline containing all components and resulting artifacts that you are going to build:
+
+## TODO: ADD DEVELOPMENT PIPELINE !!
 
 ### Links to W&B project and Github repository
 
 ```bash
+TODO: Add link to W&B project
 https://github.com/richardvlas/First-MLflow-Pipeline
 ```
 
@@ -24,10 +27,18 @@ TODO: Add project structure
 Clone the repository locally so that you can use it:
 
 ```bash
-$ git clone https://github.com/richardvlas/ML-pipeline-short-term-rental-prices-NYC.git
+git clone https://github.com/richardvlas/ML-pipeline-short-term-rental-prices-NYC.git
 ```
 and go into the repository:
 
 ```bash
-$ cd ML-pipeline-short-term-rental-prices-NYC
+cd ML-pipeline-short-term-rental-prices-NYC
+```
+
+### Create environment
+Make sure to have conda installed and ready, then create a new environment using the `environment.yml` file provided in the root of the repository and activate it:
+
+```bash
+conda env create -f environment.yml
+conda activate nyc_airbnb_dev 
 ```
