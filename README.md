@@ -42,3 +42,17 @@ Make sure to have conda installed and ready, then create a new environment using
 conda env create -f environment.yml
 conda activate nyc_airbnb_dev 
 ```
+
+### Get API key for Weights and Biases
+
+Let's make sure you are logged in to Weights & Biases. Get your API key from W&B by going to https://wandb.ai/authorize and click on the + icon (copy to clipboard), then paste your key into this command:
+
+```bash
+$ wandb login [your API key]
+```
+
+You should see a message similar to:
+
+```
+wandb: Appending key for api.wandb.ai to your netrc file: /home/[your username]/.netrc
+```
