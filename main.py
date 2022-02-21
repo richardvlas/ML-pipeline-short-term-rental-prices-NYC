@@ -97,9 +97,9 @@ def run_pipeline(config: DictConfig):
                 entry_point="main",
                 parameters={
                     "input": "clean_sample.csv:latest",
-                    "test_size": config["modelling"]["test_size"],
-                    "random_seed": config["modelling"]["random_seed"],
-                    "stratify": config["modelling"]["stratify_by"],
+                    "test_size": config["modeling"]["test_size"],
+                    "random_seed": config["modeling"]["random_seed"],
+                    "stratify": config["modeling"]["stratify_by"],
                 },
             )
 
@@ -125,14 +125,18 @@ def run_pipeline(config: DictConfig):
                     "output_artifact": "random_forest_export",
                 },
             )
-
-
-
-
-
-
+        
+        if "test_regression_model" in active_steps:
+            _ = mlflow.run(
+                f"{config['main']['component_repository']}/test_regression_model",
+                entry_point="main",
+                parameters={
+                    "mlflow_model": "random_forest_export:prod",
+                    "test_dataset": "test_data.csv:latest",
+                },
+            )
 
 
 if __name__ == "__main__":
     run_pipeline()
-
+    
