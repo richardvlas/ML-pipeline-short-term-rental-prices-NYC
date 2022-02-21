@@ -389,5 +389,16 @@ Go to W&B and to the Artifacts section, select the model export artifact then cl
 
 ![wandb pipeline graph](images/pipeline.png)
 
+### Release the pipeline
+First copy the best hyper parameters you found in your `config.yaml` so they become the default values. Then, in your repository on GitHub make a release. If you need a refresher, here are some [instructions](https://docs.github.com/en/github/administering-a-repository/managing-releases-in-a-repository#creating-a-release) on how to release on GitHub.
+
+Call the release `1.0.0`:
+
+![pipeline release](images/tag-release-github.png)
+
+If you find problems in the release, fix them and then make a new release like `1.0.1`, `1.0.2` and so on.
+
+
+
 
 
