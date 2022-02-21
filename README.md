@@ -367,7 +367,7 @@ mlflow run . \
 ### Select the best model
 Go to W&B and select the best performing model. We are going to consider the **Mean Absolute Error** as our target metric, so we are going to choose the model with the lowest MAE.
 
-[best model](images/wandb_select_best.png)
+![best model](images/wandb_select_best.png)
 
 > **HINT**: you should switch to the Table view (third icon on the left), then click on the upper right on "columns", remove all selected columns by clicking on "Hide all", then click on the left list on "ID", "Job Type", "max_depth", "n_estimators", "mae" and "r2". Click on "Close". Now in the table view you can click on the "mae" column on the three little dots, then select "Sort asc". This will sort the runs by ascending Mean Absolute Error (best result at the top).
 
