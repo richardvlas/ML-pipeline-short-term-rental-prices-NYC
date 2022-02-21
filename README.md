@@ -367,7 +367,7 @@ mlflow run . \
 ### Select the best model
 Go to W&B and select the best performing model. We are going to consider the **Mean Absolute Error** as our target metric, so we are going to choose the model with the lowest MAE.
 
-[best model](images/wandb_select_best.png)
+![best model](images/wandb_select_best.png)
 
 > **HINT**: you should switch to the Table view (third icon on the left), then click on the upper right on "columns", remove all selected columns by clicking on "Hide all", then click on the left list on "ID", "Job Type", "max_depth", "n_estimators", "mae" and "r2". Click on "Close". Now in the table view you can click on the "mae" column on the three little dots, then select "Sort asc". This will sort the runs by ascending Mean Absolute Error (best result at the top).
 
@@ -375,7 +375,19 @@ When you have found the best job, click on its name. If you are interested you c
 
 Go to the artifact section of the selected job, and select the `model_export` output artifact. Add a `prod` tag to it to mark it as "production ready".
 
+### Test
+Use the provided step `test_regression_model` to test your production model against the test set. Implement the call to this component in the `main.py` file. As usual you can see the parameters in the corresponding `MLproject` file. Use the artifact `random_forest_export:prod` for the parameter `mlflow_model` and the test artifact `test_data.csv:latest` as `test_artifact`.
 
+> **NOTE**: This step is NOT run by default when you run the pipeline. In fact, it needs the manual step of promoting a model to `prod` before it can complete successfully. Therefore, you have to activate it explicitly on the command line:
+
+```bash
+mlflow run . -P steps=test_regression_model
+```
+
+### Visualize the pipeline
+Go to W&B and to the Artifacts section, select the model export artifact then click on the `Graph view` tab. Below is the representation of your pipeline that you will see:
+
+![wandb pipeline graph](iamges/pipeline.png)
 
 
 
