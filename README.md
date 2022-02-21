@@ -337,8 +337,7 @@ Use the provided component called `train_val_test_split` to extract and segregat
 
 > **HINT**: The path to the step can be expressed as `mlflow.run(f"{config['main']['components_repository']}/train_val_test_split", ...)`.
 
-# TODO ADD LINK TO PARAMS HERE!
-You can see the parameters accepted by this step [here](??)
+You can see the parameters accepted by this step [here](components/train_val_test_split/MLproject)
 
 After you execute, you will see something like:
 
