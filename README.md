@@ -353,7 +353,29 @@ The script `src/train_random_forest/run.py` contains the ML model training step 
 
 > **NOTE**: the `main.py` file provides a variable `rf_config` to be passed as the `rf_config` parameter.
 
+### Optimize hyperparameters
+Re-run the entire pipeline varying the hyperparameters of the Random Forest model. This can be accomplished easily by exploiting the Hydra configuration system. Use the multi-run feature (adding the `-m` option at the end of the `hydra_options` specification), and try setting the parameter `modeling.max_tfidf_features` to 10, 15 and 30, and the `modeling.random_forest.max_features` to 0.1, 0.33, 0.5, 0.75, 1.
 
-    
+The code below runs the training pipeline sweeping though the hyperparameters:
+
+```bash
+mlflow run . \
+-P steps=train_random_forest \
+-P hydra_options="modeling.max_tfidf_features=10,15,30 modeling.random_forest.max_features=0.1,0.33,0.5,0.75,1 -m"
+```
+
+### Select the best model
+Go to W&B and select the best performing model. We are going to consider the **Mean Absolute Error** as our target metric, so we are going to choose the model with the lowest MAE.
+
+[best model](images/wandb_select_best.png)
+
+> **HINT**: you should switch to the Table view (third icon on the left), then click on the upper right on "columns", remove all selected columns by clicking on "Hide all", then click on the left list on "ID", "Job Type", "max_depth", "n_estimators", "mae" and "r2". Click on "Close". Now in the table view you can click on the "mae" column on the three little dots, then select "Sort asc". This will sort the runs by ascending Mean Absolute Error (best result at the top).
+
+When you have found the best job, click on its name. If you are interested you can explore some of the things we tracked, for example the feature importance plot. You should see that the `name` feature has quite a bit of importance (depending on your exact choice of parameters it might be the most important feature or close to that). The `name` column contains the title of the post on the rental website. Our pipeline performs a very primitive NLP analysis based on TF-IDF (term frequency-inverse document frequency) and can extract a good amount of information from the feature.
+
+Go to the artifact section of the selected job, and select the `model_export` output artifact. Add a `prod` tag to it to mark it as "production ready".
+
+
+
 
 
