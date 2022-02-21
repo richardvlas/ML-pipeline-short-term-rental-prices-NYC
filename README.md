@@ -9,7 +9,7 @@ In this project you will build such a pipeline. Here is a diagram of the ML pipe
 ### Links to W&B project and Github repository
 
 ```bash
-TODO: Add link to W&B project
+https://wandb.ai/richardvlas/nyc_airbnb?workspace=user-richardvlas
 https://github.com/richardvlas/First-MLflow-Pipeline
 ```
 
