@@ -109,7 +109,7 @@ Open this file and get familiar with its content. Remember: this file is only re
 > NOTE: do NOT hardcode any parameter when writing the pipeline. All the parameters should be accessed from the configuration file.
 
 ## Running the entire pipeline or just a selection of steps
-In order to run the pipeline when you are developing, you need to be in the root of the starter kit, then you can execute as usual:
+In order to run the pipeline when you are developing, you need to be in the root of the repository, then you can execute as usual:
 
 ```bash
 mlflow run .
@@ -150,7 +150,7 @@ This will iterate over all the environments created by `mlflow` and remove them.
 
 
 ## Project Instructions
-The pipeline is defined in the `main.py` file in the root of the starter kit. The file contains the download step and we will need to develop the needed additional steps, and then add them to the `main.py` file.
+The pipeline is defined in the `main.py` file in the root of the repository. The file contains the download step and we will need to develop the needed additional steps, and then add them to the `main.py` file.
 
 > NOTE: the modeling in this exercise should be considered a baseline. We kept the data cleaning and the modeling simple because we want to focus on the MLops aspect of the analysis. It is possible with a little more effort to get a significantly-better model for this dataset.
 
@@ -227,6 +227,81 @@ The scope of this section is to get an idea of how the process of an EDA works i
 
 8. Save the notebook, then close it (File -> Close and Halt). In the main Jupyter notebook page, click Quit in the upper right to stop Jupyter. This will also terminate the mlflow run. DO NOT USE CRTL-C
 
+### Data cleaning
+Now we transfer the data processing we have done as part of the EDA to a new `basic_cleaning` step that starts from the `sample.csv` artifact and create a new artifact `clean_sample.csv` with the cleaned data:
 
+1. Make sure you are in the root directory of the repository, then create a stub for the new step. The new step should accept the parameters `input_artifact` (the input artifact), `output_artifact` (the name for the output artifact), `output_type` (the type for the output artifact), `output_description` (a description for the output artifact), `min_price` (the minimum price to consider) and `max_price` (the maximum price to consider):
+
+    ```bash
+    cookiecutter cookie-mlflow-step -o src
+    ```
+    ```bash
+    step_name [step_name]: basic_cleaning
+    script_name [run.py]: run.py
+    job_type [my_step]: basic_cleaning
+    short_description [My step]: A very basic data cleaning
+    long_description [An example of a step using MLflow and Weights & Biases]: Download from W&B the raw dataset and apply some basic data cleaning, exporting the result to a new artifact
+    parameters [parameter1,parameter2]: input_artifact,output_artifact,output_type,output_description,min_price,max_price
+    ```
+    
+    This will create a directory `src/basic_cleaning` containing the basic files required for a MLflow step: `conda.yml`, `MLproject` and the script (which we named `run.py`).
+
+2. Modify the `src/basic_cleaning/run.py` script and the ML project script by filling the missing information about parameters (note the comments like `INSERT TYPE HERE` and `INSERT DESCRIPTION HERE`). All parameters should be of type `str` except `min_price` and `max_price` that should be `float`.
+
+3. Implement in the section marked `# YOUR CODE HERE #` the steps we have implemented in the notebook, including downloading the data from W&B. Remember to use the `logger` instance already provided to print meaningful messages to screen.
+
+    Make sure to use `args.min_price` and `args.max_price` when dropping the outliers (instead of hard-coding the values like we did in the notebook). Save the results to a CSV file called `clean_sample.csv` (`df.to_csv("clean_sample.csv", index=False)`) NOTE: Remember to use `index=False` when saving to CSV, otherwise the data checks in the next step might fail because there will be an extra `index` column
+
+    Then upload it to W&B using:
+    
+    ```python
+    artifact = wandb.Artifact(
+         args.output_artifact,
+         type=args.output_type,
+         description=args.output_description,
+     )
+     artifact.add_file("clean_sample.csv")
+     run.log_artifact(artifact)
+    ```
+    
+    > **REMEMBER**: Whenever you are using a library (like pandas), you MUST add it as dependency in the `conda.yml` file. For example, here we are using `pandas` so we must add it to `conda.yml` file, including a version:
+    
+    ```bash
+    dependencies:
+      - pip=20.3.3
+      - pandas=1.2.3
+      - pip:
+          - wandb==0.10.31
+    ```
+    
+4. Add the `basic_cleaning` step to the pipeline (the `main.py` file):
+    
+    > **WARNING**:: please note how the path to the step is constructed: `os.path.join(hydra.utils.get_original_cwd(), "src", "basic_cleaning")`. This is necessary because Hydra executes the script in a different directory than the root of the repository. You will have to do the same for every step you are going to add to the pipeline.
+
+    > **NOTE**: Remember that when you refer to an artifact stored on W&B, you MUST specify a version or a tag. For example, here the `input_artifact` should be `sample.csv:latest` and NOT just `sample.csv`. If you forget to do this, you will see a message like `Attempted to fetch artifact without alias (e.g. "<artifact_name>:v3" or "<artifact_name>:latest")`
+
+    ```python
+    if "basic_cleaning" in active_steps:
+        _ = mlflow.run(
+             os.path.join(hydra.utils.get_original_cwd(), "src", "basic_cleaning"),
+             "main",
+             parameters={
+                 "input_artifact": "sample.csv:latest",
+                 "output_artifact": "clean_sample.csv",
+                 "output_type": "clean_sample",
+                 "output_description": "Data with outliers and null values removed",
+                 "min_price": config['etl']['min_price'],
+                 "max_price": config['etl']['max_price']
+             },
+         )
+    ```
+
+5. Run the pipeline. If you go to W&B, you will see the new artifact type `clean_sample` and within it the `clean_sample.csv` artifact
+
+
+
+
+
+    
 
 
