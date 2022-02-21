@@ -48,15 +48,15 @@ def basic_cleaning(args):
     idx = df['price'].between(min_price, max_price)
     df = df[idx].copy()
 
-    # # Drop outliers in longitude/latitude column
-    # logger.info("Cleaning artifact - longitude/latitude column filter between min/max range")
-    # min_longitude = -74.25
-    # max_longitude = -73.50
-    # min_latitude = 40.5
-    # max_latitude = 41.2
-    # idx = (df['longitude'].between(min_longitude, max_longitude)) & \
-    #     (df['latitude'].between(min_latitude, max_latitude))
-    # df = df[idx].copy()
+    # Drop outliers in longitude/latitude column
+    logger.info("Cleaning artifact - longitude/latitude column filter between min/max range")
+    min_longitude = -74.25
+    max_longitude = -73.50
+    min_latitude = 40.5
+    max_latitude = 41.2
+    idx = (df['longitude'].between(min_longitude, max_longitude)) & \
+        (df['latitude'].between(min_latitude, max_latitude))
+    df = df[idx].copy()
 
     # Convert last_review column to datetime
     logger.info("Cleaning artifact - converting last_review column to datetime")
