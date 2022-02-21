@@ -11,7 +11,7 @@ etl:
   max_price: 350  # dollars
 data_check:
   kl_threshold: 0.2
-modelling:
+modeling:
   # Fraction of data to use for test (the remaining will be used for train and validation)
   test_size: 0.2
   # Fraction of remaining data to use for validation
