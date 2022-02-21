@@ -331,7 +331,23 @@ DeprecationWarning: Using or importing the ABCs from 'collections' instead of fr
 is deprecated since Python 3.3, and in 3.10 it will stop working
 ```
 
+### Data splitting
 
+Use the provided component called `train_val_test_split` to extract and segregate the test set. Add it to the pipeline then run the pipeline. As usual, use the configuration for the parameters like `test_size`, `random_seed` and `stratify_by`. Look at the `modeling` section in the config file.
+
+> **HINT**: The path to the step can be expressed as `mlflow.run(f"{config['main']['components_repository']}/train_val_test_split", ...)`.
+
+# TODO ADD LINK TO PARAMS HERE!
+You can see the parameters accepted by this step [here](??)
+
+After you execute, you will see something like:
+
+```bash
+2021-03-15 01:36:44,818 Uploading trainval_data.csv dataset
+2021-03-15 01:36:47,958 Uploading test_data.csv dataset
+```
+
+in the log. This tells you that the script is uploading 2 new datasets: `trainval_data.csv` and `test_data.csv`.
 
 
 
