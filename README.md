@@ -125,8 +125,11 @@ mlflow run . -P steps=download
 
 You can override any other parameter in the configuration file using the Hydra syntax, by providing it as a `hydra_options` parameter. For example, say that we want to set the parameter modeling -> random_forest -> n_estimators to 10 and etl -> min_price to 50:
 
-
-
+```bash
+mlflow run . \
+-P steps=download,basic_cleaning \
+-P hydra_options="modeling.random_forest.n_estimators=10 etl.min_price=50"
+```
 
 
 
