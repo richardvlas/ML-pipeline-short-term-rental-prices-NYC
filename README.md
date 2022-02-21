@@ -375,7 +375,13 @@ When you have found the best job, click on its name. If you are interested you c
 
 Go to the artifact section of the selected job, and select the `model_export` output artifact. Add a `prod` tag to it to mark it as "production ready".
 
+### Test
+Use the provided step `test_regression_model` to test your production model against the test set. Implement the call to this component in the `main.py` file. As usual you can see the parameters in the corresponding `MLproject` file. Use the artifact `random_forest_export:prod` for the parameter `mlflow_model` and the test artifact `test_data.csv:latest` as `test_artifact`.
 
+> **NOTE**: This step is NOT run by default when you run the pipeline. In fact, it needs the manual step of promoting a model to `prod` before it can complete successfully. Therefore, you have to activate it explicitly on the command line:
 
+```bash
+mlflow run . -P steps=test_regression_model
+```
 
 
