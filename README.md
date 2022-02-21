@@ -165,6 +165,17 @@ The scope of this section is to get an idea of how the process of an EDA works i
     mlflow run . -P steps=download
     ```
 
+    You will see a message similar to:
+    
+    ```bash
+    2021-03-12 15:44:39,840 Uploading sample.csv to Weights & Biases
+    ```
+    
+    This tells you that the data is going to be stored in W&B as the artifact named `sample.csv`.
+
+
+
+
 
 
 
