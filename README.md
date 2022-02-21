@@ -387,7 +387,7 @@ mlflow run . -P steps=test_regression_model
 ### Visualize the pipeline
 Go to W&B and to the Artifacts section, select the model export artifact then click on the `Graph view` tab. Below is the representation of your pipeline that you will see:
 
-![wandb pipeline graph](iamges/pipeline.png)
+![wandb pipeline graph](images/pipeline.png)
 
 
 
