@@ -398,7 +398,31 @@ Call the release `1.0.0`:
 
 If you find problems in the release, fix them and then make a new release like `1.0.1`, `1.0.2` and so on.
 
+### Train the model on a new data sample
+Let's now test that we can run the release (in this case the release version 1.0.0) using `mlflow` without any other pre-requisite. We will train the model on a new sample of data that our company received (`sample2.csv`):
 
+```bash
+mlflow run https://github.com/richardvlas/ML-pipeline-short-term-rental-prices-NYC.git \
+           -v 1.0.0 \
+           -P hydra_options="etl.sample='sample2.csv'"
+```
 
+> **NOTE**: the file `sample2.csv` contains more data than `sample1.csv` so the training will be a little slower.
 
+But, wait! It failed! The test `test_proper_boundaries` failed, apparently there is one point which is outside of the boundaries. This is an example of a "successful failure", i.e., a test that did its job and caught an unexpected event in the pipeline (in this case, in the data).
 
+You can fix this by adding these few lines in the `basic_cleaning` step just before saving the output to the csv file with `df.to_csv`:
+
+```bash
+min_longitude = -74.25
+max_longitude = -73.50
+min_latitude = 40.5
+max_latitude = 41.2
+idx = (df['longitude'].between(min_longitude, max_longitude)) & \
+    (df['latitude'].between(min_latitude, max_latitude))
+df = df[idx].copy()
+```
+
+This will drop rows in the dataset that are not in the proper geolocation.
+
+Then commit your change, make a new release (for example `1.0.1`) and retry (of course you need to use `-v 1.0.1` when calling mlflow this time). Now the run should succeed and voit la', you have trained your new model on the new data.
