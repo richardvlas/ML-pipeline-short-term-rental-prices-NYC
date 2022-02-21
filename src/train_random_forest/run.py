@@ -6,6 +6,7 @@ import argparse
 import logging
 import os
 import shutil
+import tempfile
 import matplotlib.pyplot as plt
 
 import mlflow
@@ -99,7 +100,7 @@ def train_random_forest(args):
         mlflow.sklearn.save_model(
             sk_pipe,
             export_path,
-            serialization_format=mlflow.sklean.SERIALIZATION_FORMAT_CLOUDPICKLE,
+            serialization_format=mlflow.sklearn.SERIALIZATION_FORMAT_CLOUDPICKLE,
             signature=signature,
             input_example=X_val.iloc[:2],
         )
