@@ -348,7 +348,10 @@ After you execute, you will see something like:
 
 in the log. This tells you that the script is uploading 2 new datasets: `trainval_data.csv` and `test_data.csv`.
 
+### Train Random Forest
+The script `src/train_random_forest/run.py` contains the ML model training step that is added to `main.py`. We use the name `random_forest_export` as `output_artifact`.
 
+> **NOTE**: the `main.py` file provides a variable `rf_config` to be passed as the `rf_config` parameter.
 
 
     
