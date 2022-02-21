@@ -298,8 +298,12 @@ Now we transfer the data processing we have done as part of the EDA to a new `ba
 
 5. Run the pipeline. If you go to W&B, you will see the new artifact type `clean_sample` and within it the `clean_sample.csv` artifact
 
+### Data testing
+After the cleaning, it is a good practice to put some tests that verify that the data does not contain surprises.
 
+One of our tests will compare the distribution of the current data sample with a reference, to ensure that there is no unexpected change. Therefore, we first need to define a "reference dataset". We will just tag the latest `clean_sample.csv` artifact on W&B as our reference dataset. Go with your browser to wandb.ai, navigate to your `nyc_airbnb` project, then to the artifact tab. Click on "clean_sample", then on the version with the latest tag. This is the last one we produced in the previous step. Add a tag `reference` to it by clicking the "+" in the Aliases section on the right:
 
+![reference dataset](images/wandb-tag-data-test.png)
 
 
     
