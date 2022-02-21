@@ -6,6 +6,7 @@ import argparse
 import logging
 import wandb
 import pandas as pd
+import os
 
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
@@ -75,6 +76,8 @@ def basic_cleaning(args):
     artifact.add_file(args.output_artifact)
 
     run.log_artifact(artifact)
+
+    os.remove(args.output_artifact)
 
 
 if __name__ == "__main__":
