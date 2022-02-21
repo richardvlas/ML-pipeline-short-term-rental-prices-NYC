@@ -107,3 +107,26 @@ The parameters controlling the pipeline are defined in the `config.yaml` file de
 Open this file and get familiar with its content. Remember: this file is only read by the `main.py` script (i.e., the pipeline) and its content is available with the go function in `main.py` as the config dictionary. For example, the name of the project is contained in the `project_name` key under the `main` section in the configuration file. It can be accessed from the `go` function as `config["main"]["project_name"]`.
 
 > NOTE: do NOT hardcode any parameter when writing the pipeline. All the parameters should be accessed from the configuration file.
+
+## Running the entire pipeline or just a selection of steps
+In order to run the pipeline when you are developing, you need to be in the root of the starter kit, then you can execute as usual:
+
+```bash
+mlflow run .
+```
+
+This will run the entire pipeline.
+
+When developing it is useful to be able to run one step at the time. Say you want to run only the `download` step. The `main.py` is written so that the steps are defined at the top of the file, in the `_steps` list, and can be selected by using the `steps` parameter on the command line:
+
+```bash
+mlflow run . -P steps=download
+```
+
+You can override any other parameter in the configuration file using the Hydra syntax, by providing it as a `hydra_options` parameter. For example, say that we want to set the parameter modeling -> random_forest -> n_estimators to 10 and etl -> min_price to 50:
+
+
+
+
+
+
