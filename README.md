@@ -173,6 +173,15 @@ The scope of this section is to get an idea of how the process of an EDA works i
     
     This tells you that the data is going to be stored in W&B as the artifact named `sample.csv`.
 
+2. Now execute the `eda` step:
+    
+    ```bash
+    mlflow run src/eda
+    ```
+    
+    This will install Jupyter and all the dependencies for `pandas-profiling`, and open a Jupyter notebook instance. Click on New -> Python 3 and create a new notebook. Rename it `EDA` by clicking on `Untitled` at the top, beside the Jupyter logo.
+
+
 
 
 
