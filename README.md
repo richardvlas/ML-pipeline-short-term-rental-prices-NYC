@@ -181,12 +181,51 @@ The scope of this section is to get an idea of how the process of an EDA works i
     
     This will install Jupyter and all the dependencies for `pandas-profiling`, and open a Jupyter notebook instance. Click on New -> Python 3 and create a new notebook. Rename it `EDA` by clicking on `Untitled` at the top, beside the Jupyter logo.
 
+3. Within the notebook, fetch the artifact we just created (`sample.csv`) from W&B and read it with pandas:
 
+    ```python
+    import wandb
+    import pandas as pd
 
+    run = wandb.init(project="nyc_airbnb", group="eda", save_code=True)
+    local_path = wandb.use_artifact("sample.csv:latest").file()
+    df = pd.read_csv(local_path)
+    ```
+    
+    Note that we use `save_code=True` in the call to `wandb.init` so the notebook is uploaded and versioned by W&B.
 
+4. Using `pandas-profiling`, create a profile:
 
+    ```python
+    import pandas_profiling
 
+    profile = pandas_profiling.ProfileReport(df)
+    profile.to_widgets()
+    ```
+    
+    what do you notice? Look around and see what you can find.
 
+    For example, there are missing values in a few columns and the column `last_review` is a date but it is in string format. Look also at the `price` column, and note the outliers. There are some zeros and some very high prices. After talking to your stakeholders, you decide to consider from a minimum of $ 10 to a maximum of $ 350 per night.
+
+5. Fix some of the little problems we have found in the data with the following code:
+
+    ```python
+    # Drop outliers
+    min_price = 10
+    max_price = 350
+    idx = df['price'].between(min_price, max_price)
+    df = df[idx].copy()
+    # Convert last_review to datetime
+    df['last_review'] = pd.to_datetime(df['last_review'])
+    ```
+
+    Note how we did not impute missing values. We will do that in the inference pipeline, so we will be able to handle missing values also in production.
+
+6. Create a new profile or check with `df.info()` that all obvious problems have been solved
+
+7. Terminate the run by running `run.finish()`
+
+8. Save the notebook, then close it (File -> Close and Halt). In the main Jupyter notebook page, click Quit in the upper right to stop Jupyter. This will also terminate the mlflow run. DO NOT USE CRTL-C
 
 
 
