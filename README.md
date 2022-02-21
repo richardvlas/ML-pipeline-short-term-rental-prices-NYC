@@ -353,7 +353,17 @@ The script `src/train_random_forest/run.py` contains the ML model training step 
 
 > **NOTE**: the `main.py` file provides a variable `rf_config` to be passed as the `rf_config` parameter.
 
+### Optimize hyperparameters
+Re-run the entire pipeline varying the hyperparameters of the Random Forest model. This can be accomplished easily by exploiting the Hydra configuration system. Use the multi-run feature (adding the `-m` option at the end of the `hydra_options` specification), and try setting the parameter `modeling.max_tfidf_features` to 10, 15 and 30, and the `modeling.random_forest.max_features` to 0.1, 0.33, 0.5, 0.75, 1.
 
-    
+The code below runs the training pipeline sweeping though the hyperparameters:
+
+```bash
+mlflow run .\
+-P steps=train_random_forest \
+-P hydra_options="modeling.max_tfidf_features=10,15,30 modeling.random_forest.max_features=0.1,0.33,0.5,0.75,1 -m"
+```
+
+
 
 
