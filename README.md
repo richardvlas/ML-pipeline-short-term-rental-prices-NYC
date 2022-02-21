@@ -149,6 +149,21 @@ for e in $(conda info --envs | grep mlflow | cut -f1 -d" "); do conda uninstall 
 This will iterate over all the environments created by `mlflow` and remove them.
 
 
+## Project Instructions
+The pipeline is defined in the `main.py` file in the root of the starter kit. The file contains the download step and we will need to develop the needed additional steps, and then add them to the `main.py` file.
+
+> NOTE: the modeling in this exercise should be considered a baseline. We kept the data cleaning and the modeling simple because we want to focus on the MLops aspect of the analysis. It is possible with a little more effort to get a significantly-better model for this dataset.
+
+### Exploratory Data Analysis (EDA)
+The scope of this section is to get an idea of how the process of an EDA works in the context of pipelines, during the data exploration phase. In a real scenario you would spend a lot more time in this phase, but here we are going to do the bare minimum.
+
+> NOTE: remember to add some markdown cells explaining what you are about to do, so that the notebook can be understood by other people
+
+1. The `main.py` script already comes with the download step implemented. Run the pipeline to get a sample of the data. The pipeline will also upload it to Weights & Biases:
+
+    ```bash
+    mlflow run . -P steps=download
+    ```
 
 
 
