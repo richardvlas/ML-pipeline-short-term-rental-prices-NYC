@@ -4,7 +4,7 @@ You are working for a property management company renting rooms and properties f
 
 In this project you will build such a pipeline. Here is a diagram of the ML pipeline containing all components and resulting artifacts that you are going to build:
 
-## TODO: ADD DEVELOPMENT PIPELINE !!
+![ml pipeline dev](images/ml_pipeline_development.png)
 
 ### Links to W&B project and Github repository
 
