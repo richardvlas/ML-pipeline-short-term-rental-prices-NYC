@@ -10,7 +10,7 @@ In this project you will build such a pipeline. Here is a diagram of the ML pipe
 
 ```bash
 https://wandb.ai/richardvlas/nyc_airbnb?workspace=user-richardvlas
-https://github.com/richardvlas/First-MLflow-Pipeline
+https://github.com/richardvlas/ML-pipeline-short-term-rental-prices-NYC.git
 ```
 
 ## Project Structure
